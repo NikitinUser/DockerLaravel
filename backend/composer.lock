@@ -2517,19 +2517,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/NikitinUser/userManagementModule.git",
-                "reference": "b2048227828f03d534a722eb79677d2c5f931018"
+                "reference": "371d763d0a33aab6ddfb794c44bde0b2319599e9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/NikitinUser/userManagementModule/zipball/b2048227828f03d534a722eb79677d2c5f931018",
-                "reference": "b2048227828f03d534a722eb79677d2c5f931018",
+                "url": "https://api.github.com/repos/NikitinUser/userManagementModule/zipball/371d763d0a33aab6ddfb794c44bde0b2319599e9",
+                "reference": "371d763d0a33aab6ddfb794c44bde0b2319599e9",
                 "shasum": ""
             },
             "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "NikitinUser\\UserManagementModule\\": ""
+                    "UserManagementModule\\": "./UserManagementModule"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2546,7 +2546,7 @@
                 "issues": "https://github.com/NikitinUser/userManagementModule/issues",
                 "source": "https://github.com/NikitinUser/userManagementModule/tree/master"
             },
-            "time": "2023-11-25T23:34:15+00:00"
+            "time": "2024-05-31T12:18:47+00:00"
         },
         {
             "name": "nunomaduro/termwind",
