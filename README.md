@@ -21,10 +21,10 @@
 2. cp .env.example .env
 3. sudo make up
 4. make install
-5. make user-management-role-init
-6. uncomment UserManagementModuleProvider in app.php
-7. make jwt-init
-8. make migrate
+5. make migrate
+6. make jwt-init
+7. make user-management-role-init
+8. uncomment UserManagementModuleProvider in app.php
 9. php artisan app:set-admin {id_user} // опционально
 
 # Swagger
