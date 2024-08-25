@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "563f52047661e661b363f0bfca5bcf80",
+    "content-hash": "db6d5eb7518ee6546c10c1ce6419311a",
     "packages": [
         {
             "name": "brick/math",
@@ -2510,6 +2510,39 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v5.0.2"
             },
             "time": "2024-03-05T20:51:40+00:00"
+        },
+        {
+            "name": "nikitinuser/laravel-make-all-extended",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/NikitinUser/LaravelMakeAllExtended.git",
+                "reference": "358a5b6e3536cb4cdbb10a078c8c2ba85443115a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/NikitinUser/LaravelMakeAllExtended/zipball/358a5b6e3536cb4cdbb10a078c8c2ba85443115a",
+                "reference": "358a5b6e3536cb4cdbb10a078c8c2ba85443115a",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nikitinuser\\LaravelMakeAllExtended\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Vladimir Nikitin",
+                    "email": "jo.kent@mail.ru"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/NikitinUser/LaravelMakeAllExtended/issues",
+                "source": "https://github.com/NikitinUser/LaravelMakeAllExtended/tree/1.0"
+            },
+            "time": "2024-08-25T22:16:02+00:00"
         },
         {
             "name": "nikitinuser/user-management-module",
