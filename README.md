@@ -15,6 +15,7 @@
 3. Пакет для свагер аннотаций zircote/swagger-php
 4. Пакет vladimir-yuldashev/laravel-queue-rabbitmq
 5. Пакет predis/predis
+6. Команда make:all_extended nikitinuser/laravel-make-all-extended
 
 # Для запуска бэка:
 1. cd backend
@@ -25,7 +26,8 @@
 6. make jwt-init
 7. make user-management-role-init
 8. uncomment UserManagementModuleProvider in app.php
-9. php artisan app:set-admin {id_user} // опционально
+9. uncomment LaravelMakeAllExtendedProvider
+10. php artisan app:set-admin {id_user} // опционально
 
 # Swagger
     Для генерации Swagger по аннотациям используются библиотеки:
