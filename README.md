@@ -4,7 +4,7 @@
 # Настроены
 1. nginx
 2. pgsql
-3. php + laravel
+3. php + laravel 10
 4. rabbit mq
 5. redis
 6. cron
