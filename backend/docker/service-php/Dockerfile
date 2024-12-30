@@ -1,4 +1,4 @@
-FROM php:8.1.1-fpm AS base
+FROM php:8.2.1-fpm AS base
 
 WORKDIR /var/www/html
 
@@ -12,9 +12,13 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libpq-dev \
     libfcgi0ldbl \
+    librdkafka-dev \
+    build-essential \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install -j$(nproc) iconv zip bcmath calendar posix sockets \
-    && docker-php-ext-install pdo pdo_pgsql pgsql
+    && docker-php-ext-install pdo pdo_pgsql pgsql \
+    && pecl install rdkafka \
+    && docker-php-ext-enable rdkafka
 
 ENV LC_ALL C.UTF-8
 

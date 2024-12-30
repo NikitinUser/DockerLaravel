@@ -5,7 +5,7 @@
 1. nginx
 2. pgsql
 3. php + laravel 11
-4. rabbit mq
+4. kafka
 5. redis
 6. cron
 
@@ -13,7 +13,7 @@
 1. Пакет для ролей nikitinuser/user-management-module
 2. Пакет для jwt авторизации tymon/jwt-auth (все настроено)
 3. Пакет для свагер аннотаций zircote/swagger-php
-4. Пакет vladimir-yuldashev/laravel-queue-rabbitmq
+4. Пакет mateusjunges/laravel-kafka
 5. Пакет predis/predis
 6. Команда make:all_extended nikitinuser/laravel-make-all-extended
 
