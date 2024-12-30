@@ -1,6 +1,27 @@
 # DockerLaravel
 Репозиторий с настроенным для запуска в докере проектом
 
+# Версии
+
+<table>
+    <tr>
+        <td>Версия</td>
+        <td>Ветка</td>
+    </tr>
+    <tr>
+        <td>Laravel 10, php 8.1.1, rabbit</td>
+        <td><a href="https://github.com/NikitinUser/DockerLaravel/tree/laravel-10">laravel-10</a></td>
+    </tr>
+    <tr>
+        <td>Laravel 11, php 8.1.1, rabbit</td>
+        <td>laravel-11 (current)</td>
+    </tr>
+    <tr>
+        <td>Laravel 11, php 8.2.1, rabbit, kafka</td>
+        <td><a href="https://github.com/NikitinUser/DockerLaravel/tree/laravel-11-kafka">laravel-11-kafka</a></td>
+    </tr>
+</table>
+
 # Настроены
 1. nginx
 2. pgsql
