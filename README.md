@@ -19,6 +19,11 @@
     <tr>
         <td>Laravel 11, php 8.2.1, rabbit, kafka</td>
         <td>laravel-11-kafka (current)</td>
+        <td>laravel-11 (current)</td>
+    </tr>
+    <tr>
+        <td>Laravel 11, php 8.2.1, rabbit, kafka</td>
+        <td><a href="https://github.com/NikitinUser/DockerLaravel/tree/laravel-11-kafka">laravel-11-kafka</a></td>
     </tr>
 </table>
 
@@ -31,12 +36,10 @@
 6. cron
 
 # Предустановлены:
-1. Пакет для ролей nikitinuser/user-management-module
-2. Пакет для jwt авторизации tymon/jwt-auth (все настроено)
-3. Пакет для свагер аннотаций zircote/swagger-php
-4. Пакет mateusjunges/laravel-kafka
-5. Пакет predis/predis
-6. Команда make:all_extended nikitinuser/laravel-make-all-extended
+1. Пакет для jwt авторизации tymon/jwt-auth (все настроено)
+2. Пакет для свагер аннотаций zircote/swagger-php
+3. Пакет vladimir-yuldashev/laravel-queue-rabbitmq
+4. Пакет predis/predis
 
 # Для запуска бэка:
 1. cd backend
@@ -46,9 +49,7 @@
 5. make migrate
 6. make jwt-init
 7. make user-management-role-init
-8. uncomment UserManagementModuleProvider in app.php
-9. uncomment LaravelMakeAllExtendedProvider
-10. php artisan app:set-admin {id_user} // опционально
+8. php artisan app:set-admin {id_user} // опционально
 
 # Swagger
     Для генерации Swagger по аннотациям используются библиотеки:
