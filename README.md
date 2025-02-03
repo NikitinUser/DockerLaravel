@@ -31,12 +31,10 @@
 6. cron
 
 # Предустановлены:
-1. Пакет для ролей nikitinuser/user-management-module
-2. Пакет для jwt авторизации tymon/jwt-auth (все настроено)
-3. Пакет для свагер аннотаций zircote/swagger-php
-4. Пакет vladimir-yuldashev/laravel-queue-rabbitmq
-5. Пакет predis/predis
-6. Команда make:all_extended nikitinuser/laravel-make-all-extended
+1. Пакет для jwt авторизации tymon/jwt-auth (все настроено)
+2. Пакет для свагер аннотаций zircote/swagger-php
+3. Пакет vladimir-yuldashev/laravel-queue-rabbitmq
+4. Пакет predis/predis
 
 # Для запуска бэка:
 1. cd backend
