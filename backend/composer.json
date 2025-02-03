@@ -11,8 +11,6 @@
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.8",
         "mateusjunges/laravel-kafka": "^2.4",
-        "nikitinuser/laravel-make-all-extended": "^2.0",
-        "nikitinuser/user-management-module": "dev-master",
         "predis/predis": "^2.2",
         "tymon/jwt-auth": "^2.1",
         "vladimir-yuldashev/laravel-queue-rabbitmq": "^14.1",
