@@ -19,11 +19,6 @@
     <tr>
         <td>Laravel 11, php 8.2.1, rabbit, kafka</td>
         <td>laravel-11-kafka (current)</td>
-        <td>laravel-11 (current)</td>
-    </tr>
-    <tr>
-        <td>Laravel 11, php 8.2.1, rabbit, kafka</td>
-        <td><a href="https://github.com/NikitinUser/DockerLaravel/tree/laravel-11-kafka">laravel-11-kafka</a></td>
     </tr>
 </table>
 
