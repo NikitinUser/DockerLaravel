@@ -9,16 +9,8 @@
         <td>Ветка</td>
     </tr>
     <tr>
-        <td>Laravel 10, php 8.1.1, rabbit</td>
-        <td><a href="https://github.com/NikitinUser/DockerLaravel/tree/laravel-10">laravel-10</a></td>
-    </tr>
-    <tr>
-        <td>Laravel 11, php 8.1.1, rabbit</td>
-        <td>laravel-11 (current)</td>
-    </tr>
-    <tr>
-        <td>Laravel 11, php 8.2.1, rabbit, kafka</td>
-        <td><a href="https://github.com/NikitinUser/DockerLaravel/tree/laravel-11-kafka">laravel-11-kafka</a></td>
+        <td>Laravel 11, php 8.4.1, rabbit</td>
+        <td>laravel-11-php8.4 (current)</td>
     </tr>
 </table>
 
@@ -43,8 +35,7 @@
 4. make install
 5. make migrate
 6. make jwt-init
-7. make user-management-role-init
-8. php artisan app:set-admin {id_user} // опционально
+7. sudo docker exec -ti backend-service-php-1 /bin/bash
 
 # Swagger
     Для генерации Swagger по аннотациям используются библиотеки:
