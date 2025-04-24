@@ -36,3 +36,6 @@ test:
 jwt-init:
 	env UID=${UID} docker compose exec -u app service-php php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
 	env UID=${UID} docker compose exec -u app service-php php artisan jwt:secret
+
+swg-json:
+	docker run --rm -it -v ${PWD}:/var/www/html $(shell source .env; echo $${COMPOSE_PROJECT_NAME}_php-service) ./vendor/bin/openapi app -o ./resources/swagger/v1/openapi.json
