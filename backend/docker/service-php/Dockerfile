@@ -1,19 +1,34 @@
-FROM php:8.1.1-fpm AS base
+FROM php:8.4.1-fpm AS base
 
 WORKDIR /var/www/html
 
 # php packages
 RUN apt-get update && apt-get install -y \
+    git \
     curl \
     openssl \
+    procps \
     libssl-dev \
     libcurl4-openssl-dev \
     libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libmcrypt-dev \
+    libpng-dev \
     libzip-dev \
     libpq-dev \
     libfcgi0ldbl \
+    libicu-dev \
+    libldap-dev \
+    && pecl install redis \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl \
+    && docker-php-ext-enable intl \
+    && docker-php-ext-enable redis \
+    && docker-php-ext-install ldap \
+    && docker-php-ext-enable ldap \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
-    && docker-php-ext-install -j$(nproc) iconv zip bcmath calendar posix sockets \
+    && docker-php-ext-install -j$(nproc) gd iconv zip bcmath calendar posix sockets \
     && docker-php-ext-install pdo pdo_pgsql pgsql
 
 ENV LC_ALL C.UTF-8

@@ -6,7 +6,7 @@ get-env:
 	cp .env.example .env
 
 up:
-	env UID=${UID} docker compose up -d --build --remove-orphans
+	env UID=${UID} docker compose up --build --remove-orphans --force-recreate
 
 install:
 	docker run --rm -it -v ${PWD}:/app -u ${UID}:${UID} composer install --no-scripts --no-interaction --optimize-autoloader  --ignore-platform-reqs

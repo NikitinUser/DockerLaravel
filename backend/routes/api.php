@@ -3,23 +3,20 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::get('/ping', function () {
+    return response()->json('pong');
+});
 
 Route::group([
-    'middleware' => 'api',
-    'prefix' => 'auth'
-], function ($router) {
-    Route::post('login', [App\Http\Controllers\AuthController::class, 'login']);
-    Route::post('logout', [App\Http\Controllers\AuthController::class, 'logout']);
-    Route::post('refresh', [App\Http\Controllers\AuthController::class, 'refresh']);
-    Route::post('me', [App\Http\Controllers\AuthController::class, 'me']);
+    'prefix' => 'auth',
+    'controller' => \App\Http\Controllers\AuthController::class,
+], function () {
+    Route::post('login', 'login');
+
+    Route::group([
+        'middleware' => 'jwt.auth',
+    ], function () {
+        Route::get('logout', 'logout');
+        Route::post('refresh', 'refresh');
+    });
 });

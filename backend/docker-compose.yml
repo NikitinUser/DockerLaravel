@@ -15,7 +15,7 @@ services:
     depends_on:
       - service-php
     networks:
-      - general-network
+      - laravel-docker-11
       - local
   service-php:
     build:
@@ -28,7 +28,7 @@ services:
     volumes:
       - .:/var/www/html
     networks:
-      - general-network
+      - laravel-docker-11
       - local
   php-worker:
     restart: always
@@ -41,10 +41,14 @@ services:
     volumes:
       - .:/var/www/html
     networks:
-      - general-network
+      - laravel-docker-11
       - local
   service-db:
-    image: postgres:11.3
+    build:
+      context: .
+      dockerfile: ./docker/pgsql/Dockerfile
+      args:
+          UID: ${UID}
     restart: always
     ports:
       - ${POSTGRES_PORT}:5432
@@ -54,9 +58,9 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE}
     volumes:
-      - postgres-sock:/var/lib/postgresql
+      - postgres-l11-volume:/var/lib/postgresql/data
     networks:
-      - general-network
+      - laravel-docker-11
     healthcheck:
       test: pg_isready -q -d ${DB_DATABASE} -U ${DB_USERNAME}
       timeout: 5s
@@ -64,7 +68,7 @@ services:
     restart: always
     image: rabbitmq:3.8.2-management
     ports:
-      - "15672:15672"
+      - "15674:15672"
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
     environment:
@@ -74,7 +78,7 @@ services:
       test: rabbitmq-diagnostics -q check_port_connectivity && rabbitmq-diagnostics -q node_health_check
       timeout: 10s
     networks:
-      - general-network
+      - laravel-docker-11
   cron:
     platform: linux/amd64
     build:
@@ -86,7 +90,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./docker/cron/config.json:/opt/crontab/config.json:rw
     networks:
-      - general-network
+      - laravel-docker-11
   redis:
     restart: always
     image: redis:3-alpine
@@ -96,15 +100,15 @@ services:
       test: redis-cli PING
       timeout: 3s
     networks:
-      - general-network
+      - laravel-docker-11
 volumes:
-  postgres-sock:
+  postgres-l11-volume:
   rabbitmq-data:
   redis-data:
 networks:
-  general-network:
-    name: general-network
+  laravel-docker-11:
+    name: laravel-docker-11
     attachable: true
   local:
-    external: true
+    driver: bridge
 

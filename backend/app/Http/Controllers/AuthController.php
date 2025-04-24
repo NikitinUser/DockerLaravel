@@ -2,82 +2,155 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use App\Facades\AuthJwtGuard;
 use App\Http\Controllers\Controller;
+use App\Services\AuthService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function __construct(private AuthService $authService)
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
     }
 
     /**
-     * Get a JWT via given credentials.
+     * @OA\Post(
+     *   path="/api/auth/login",
+     *   summary="Аутентификация пользователя",
+     *   operationId="Login",
+     *   tags={"Auth"},
+     *   @OA\RequestBody(
+     *     required=true,
+     *     @OA\JsonContent(
+     *       required={"username","password"},
+     *       @OA\Property(property="username", type="string", description="Логин или e-mail", example="username"),
+     *       @OA\Property(property="password", type="string", description="Пароль", example="password")
+     *     )
+     *   ),
+     *   @OA\Response(
+     *     response="200",
+     *     description="Success",
+     *     @OA\JsonContent(
+     *       required={"success","message"},
+     *       @OA\Property(property="success", type="bool", default=true),
+     *       @OA\Property(property="data", type="object",
+     *         required={"token","expires_at"},
+     *         @OA\Property(
+     *           property="token", type="string",
+     *           example="51|AIq61yLOTpEtTbywZ9Ba5MKapRlgrboyj3j2RXDFdf041a06"
+     *         ),
+     *         @OA\Property(property="expires_at", ref="#/components/schemas/typeTimestampNullable")
+     *       )
+     *     )
+     *   ),
+     *   @OA\Response(response=401, ref="#/components/responses/errorResponseUnauthorized"),
+     *   @OA\Response(
+     *     response="422",
+     *     description="Validation error",
+     *     @OA\JsonContent(ref="#/components/schemas/validationError")
+     *   )
+     * )
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     *
+     * @return JsonResponse
+     *
+     * @throws \Exception
      */
-    public function login()
+    public function login(Request $request): JsonResponse
     {
-        $credentials = request(['email', 'password']);
+        $request->validate([
+            'username' => [
+                'required',
+                'string',
+                'max:100',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'max:100',
+            ],
+        ]);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+        $token = $this->authService->login(
+            $request->input('username'),
+            $request->input('password')
+        );
 
         return $this->respondWithToken($token);
     }
 
     /**
-     * Get the authenticated User.
+     * @OA\Get(
+     *   path="/api/auth/logout",
+     *   summary="Выход из системы",
+     *   operationId="Logout",
+     *   tags={"Auth"},
+     *   security={{"bearerAuth":{}}},
+     *   @OA\Response(
+     *     response="200",
+     *     description="Success",
+     *     @OA\JsonContent(
+     *       required={"success"},
+     *       @OA\Property(property="success", type="bool", default=true)
+     *     )
+     *   ),
+     *   @OA\Response(response=401, ref="#/components/responses/errorResponseUnauthorized")
+     * )
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function me()
+    public function logout(): JsonResponse
     {
-        return response()->json(auth()->user());
+        $this->authService->logout();
+
+        return response()->json();
     }
 
     /**
-     * Log the user out (Invalidate the token).
+     * @OA\Post(
+     *   path="/api/auth/refresh",
+     *   summary="Обновление токена",
+     *   operationId="Refresh",
+     *   tags={"Auth"},
+     *   security={{"bearerAuth":{}}},
+     *   @OA\Response(
+     *     response="200",
+     *     description="Success",
+     *     @OA\JsonContent(
+     *       required={"success","message"},
+     *       @OA\Property(property="success", type="bool", default=true),
+     *       @OA\Property(property="data", type="object",
+     *         required={"token","expires_at"},
+     *         @OA\Property(
+     *           property="token", type="string",
+     *           example="51|AIq61yLOTpEtTbywZ9Ba5MKapRlgrboyj3j2RXDFdf041a06"
+     *         ),
+     *         @OA\Property(property="expires_at", ref="#/components/schemas/typeTimestampNullable")
+     *       )
+     *     )
+     *   ),
+     *   @OA\Response(response=401, ref="#/components/responses/errorResponseUnauthorized")
+     * )
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function logout()
+    public function refresh(): JsonResponse
     {
-        auth()->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
+        return $this->respondWithToken($this->authService->refresh());
     }
 
     /**
-     * Refresh a token.
+     * @param string $token
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
-    }
-
-    /**
-     * Get the token array structure.
-     *
-     * @param  string $token
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    protected function respondWithToken($token)
+    protected function respondWithToken(string $token): JsonResponse
     {
         return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'token' => $token,
+            'expires_at' => now()->addMinutes(AuthJwtGuard::getTtl()),
         ]);
     }
 }
