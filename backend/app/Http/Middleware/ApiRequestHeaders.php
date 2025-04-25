@@ -18,9 +18,7 @@ class ApiRequestHeaders
     public function handle($request, Closure $next)
     {
         if (!in_array($request->getRequestUri(), config('api.request.routes_exclude_json_headers'))) {
-            foreach (config('api.request.json_headers') as $key => $value) {
-                $request->headers->add([$key => $value]);
-            }
+            $request->headers->add(config('api.request.json_headers'));
         }
 
         return $next($request);
