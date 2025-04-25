@@ -59,6 +59,3 @@ ENV TZ=Europe/Moscow
 FROM base AS service-php
 COPY --chown=app:app . ./
 
-FROM base AS worker
-USER app
-CMD ["php", "artisan", "queue:listen", "--delay=30"]

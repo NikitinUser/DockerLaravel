@@ -35,9 +35,24 @@ services:
     build:
       context: .
       dockerfile: ./docker/service-php/Dockerfile
-      target: worker
+      target: service-php
       args:
         UID: ${UID}
+    command: php artisan queue:listen --queue=default --tries=1 --no-interaction --verbose
+    volumes:
+      - .:/var/www/html
+    networks:
+      - laravel-docker-11
+      - local
+  php-scheduler:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker/service-php/Dockerfile
+      target: service-php
+      args:
+        UID: ${UID}
+    command: php artisan schedule:work --no-interaction --verbose
     volumes:
       - .:/var/www/html
     networks:
@@ -77,18 +92,6 @@ services:
     healthcheck:
       test: rabbitmq-diagnostics -q check_port_connectivity && rabbitmq-diagnostics -q node_health_check
       timeout: 10s
-    networks:
-      - laravel-docker-11
-  cron:
-    platform: linux/amd64
-    build:
-      context: .
-      dockerfile: ./docker/cron/Dockerfile
-      target: base
-    restart: always
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./docker/cron/config.json:/opt/crontab/config.json:rw
     networks:
       - laravel-docker-11
   redis:
