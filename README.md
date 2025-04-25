@@ -31,8 +31,8 @@
 # Для запуска бэка:
 1. cd backend
 2. cp .env.example .env
-3. sudo make up
-4. make install
+3. composer install --no-scripts --no-interaction --optimize-autoloader  --ignore-platform-reqs
+4. sudo make up
 5. make migrate
 6. make jwt-init
 7. sudo docker exec -ti backend-service-php-1 /bin/bash
