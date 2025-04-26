@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Throwable;
 
 class AuthController extends Controller
 {
@@ -104,8 +105,7 @@ class AuthController extends Controller
     public function logout(): JsonResponse
     {
         $this->authService->logout();
-
-        return response()->json();
+        return response()->success();
     }
 
     /**
@@ -148,7 +148,7 @@ class AuthController extends Controller
      */
     protected function respondWithToken(string $token): JsonResponse
     {
-        return response()->json([
+        return response()->success([
             'token' => $token,
             'expires_at' => now()->addMinutes(AuthJwtGuard::getTtl()),
         ]);
