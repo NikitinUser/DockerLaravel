@@ -30,12 +30,15 @@
 
 # Для запуска бэка:
 1. cd backend
-2. cp .env.example .env
-3. composer install --no-scripts --no-interaction --optimize-autoloader  --ignore-platform-reqs
-4. sudo make up
-5. make migrate
-6. make jwt-init
-7. sudo docker exec -ti backend-service-php-1 /bin/bash
+2. make get-env
+3. sudo make up
+4. sudo make first-run
+
+# Для запуска тестов
+1. sudo make test
+
+# Для действий в php контейнере
+1. sudo docker exec -ti backend-service-php-1 /bin/bash
 
 # Swagger
     Для генерации Swagger по аннотациям используются библиотеки:

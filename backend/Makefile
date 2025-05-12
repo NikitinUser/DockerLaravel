@@ -3,32 +3,22 @@ SHELL=/bin/bash
 UID := 1000
 
 get-env:
-	cp .env.example .env
+	[ ! -f .env ] && cp .env.example .env || true
 
 up:
+	composer install --no-scripts --no-interaction --optimize-autoloader --ignore-platform-reqs && \
 	env UID=${UID} docker compose up --build --remove-orphans --force-recreate
 
-install:
-	docker run --rm -it -v ${PWD}:/app -u ${UID}:${UID} composer install --no-scripts --no-interaction --optimize-autoloader  --ignore-platform-reqs
-	env UID=${UID} docker compose exec -u app service-php php artisan package:discover
-	env UID=${UID} docker compose restart  service-php
-
-update:
-	docker run --rm -it -v ${PWD}:/app -u ${UID}:${UID} composer update --no-scripts --no-interaction --optimize-autoloader --ignore-platform-reqs
-	env UID=${UID} docker compose exec -u app service-php php artisan package:discover
-	env UID=${UID} docker compose restart service-php
-
-dump-autoload:
-	docker run --rm -it -v ${PWD}:/app -u ${UID}:${UID} composer dump-autoload
+first-run:
+	make jwt-init
+	make migrate
+	make create-default-user
 
 migrate:
 	env UID=${UID} docker compose exec -u app service-php php artisan migrate
 
-migrate-refresh:
-	env UID=${UID} docker compose exec -u app service-php php artisan migrate:refresh
-
-run-seed:
-	env UID=${UID} docker compose exec -u app service-php php artisan db:seed
+create-default-user:
+	env UID=${UID} docker compose exec -u app service-php php artisan auth:create-user admin 12345
 
 test:
 	env UID=${UID} docker compose exec -u app service-php php artisan test
